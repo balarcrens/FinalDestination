@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+* {
+    font-family: "Rubik", sans-serif;
+}
+
+.slider {
+    font-family: "Lavishly Yours", cursive;
+}
