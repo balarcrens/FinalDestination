@@ -30,7 +30,7 @@ export default function Header() {
             <header
                 ref={headerRef}
                 className={`${isFixed ? "fixed top-3 left-0 right-0" : "mt-3"} 
-                mx-auto max-w-5xl w-full flex items-center justify-between px-2 sm:px-6 py-1
+                mx-auto w-[calc(100%-2rem)] sm:max-w-5xl flex items-center justify-between px-2.5 sm:px-6 py-1
                 bg-white/30 dark:bg-black/30 border backdrop-blur-md rounded-lg
                 transition-all ease-in duration-300 z-50`}
             >
@@ -46,23 +46,23 @@ export default function Header() {
 
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex space-x-5 font-medium">
-                    <Link to="/" className="hover:underline underline-offset-4">
+                    <Link to="/" className="hover:underline hover:text-[#09AFF4] underline-offset-4">
                         Home
                     </Link>
-                    <Link to="/tourpackages" className="hover:underline underline-offset-4">
+                    <Link to="/tourpackages" className="hover:underline hover:text-[#09AFF4] underline-offset-4">
                         Packages
                     </Link>
-                    <Link to="/aboutus" className="hover:underline underline-offset-4">
+                    <Link to="/aboutus" className="hover:underline hover:text-[#09AFF4] underline-offset-4">
                         About
                     </Link>
-                    <Link to="/contactus" className="hover:underline underline-offset-4">
+                    <Link to="/contactus" className="hover:underline hover:text-[#09AFF4] underline-offset-4">
                         Contact Us
                     </Link>
                 </nav>
 
                 {/* Desktop Login */}
                 <div className="hidden md:flex font-medium">
-                    <Link className="hover:underline underline-offset-6">
+                    <Link className="hover:underline hover:text-[#09AFF4] underline-offset-6">
                         Login
                     </Link>
                 </div>
@@ -70,7 +70,10 @@ export default function Header() {
                 {/* Mobile Menu Button */}
                 <button
                     className="md:hidden p-2 rounded-lg bg-white/20 hover:bg-white/30 transition"
-                    onClick={() => setMenuOpen(!menuOpen)}
+                    onClick={() => {
+                        setMenuOpen(!menuOpen);
+                        window.scroll(0, 0);
+                    }}
                 >
                     {menuOpen ? <X size={22} /> : <Menu size={22} />}
                 </button>
@@ -81,7 +84,7 @@ export default function Header() {
                 <div className="md:hidden bg-white dark:bg-black/90 backdrop-blur-md border-t p-4 space-y-4 animate-slideDown">
                     <Link to="/" className="block hover:underline" onClick={() => setMenuOpen(false)}>Home</Link>
                     <Link to="/tourpackages" className="block hover:underline" onClick={() => setMenuOpen(false)}>Packages</Link>
-                    <Link to="/about" className="block hover:underline" onClick={() => setMenuOpen(false)}>About</Link>
+                    <Link to="/aboutus" className="block hover:underline" onClick={() => setMenuOpen(false)}>About</Link>
                     <Link to="/contactus" className="block hover:underline" onClick={() => setMenuOpen(false)}>Contact Us</Link>
                     <Link className="block hover:underline" onClick={() => setMenuOpen(false)}>Login</Link>
                 </div>

@@ -53,7 +53,7 @@ export default function ContactUs() {
                     </div>
 
                     {/* Contact Form */}
-                    <div className="bg-white dark:bg-gray-900 shadow-lg rounded-2xl sm:p-8 border border-gray-100 dark:border-gray-800">
+                    <div className="bg-white dark:bg-gray-900 shadow-lg rounded-2xl p-4 sm:p-8 border border-gray-100 dark:border-gray-800">
                         <form className="space-y-6">
                             <div>
                                 <label className="block mb-2 font-medium">Name</label>

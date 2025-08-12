@@ -36,16 +36,12 @@ const HeroSection = () => {
     }, [images.length]);
 
     return (
-        <section
-            className="relative h-[60vh] flex flex-col items-center justify-center text-center px-3 text-white transition-all duration-700 ease-in-out"
-            style={{
-                backgroundImage: `url('${images[currentIndex]}')`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-            }}
-        >
-            {/* Overlay */}
-            {/* <div className="absolute inset-0 bg-black/30"></div> */}
+        <section className="relative flex flex-col items-center justify-center text-center px-3 text-white h-[80vh] sm:h-[70vh] md:h-[80vh] overflow-hidden">
+            <img
+                src={images[currentIndex]}
+                alt="Hero Background"
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
+            />
 
             {/* Content */}
             <div className="relative z-10 max-w-3xl">
@@ -83,7 +79,7 @@ const HeroSection = () => {
                             <img
                                 src={cat.img}
                                 alt={cat.name}
-                                className="w-8 h-8 rounded-full group-hover:scale-120 transition mr-2 object-cover"
+                                className="w-8 h-8 rounded-full group-hover:scale-110 transition mr-2 object-cover"
                             />
                             <span className="text-sm font-medium">{cat.name}</span>
                         </div>
@@ -105,7 +101,7 @@ const Destinations = () => {
     return (
         <>
             <div className="relative p-3 sm:p-5 max-w-7xl mx-auto">
-                <div className="absolute top-25 sm:top-20 sm:left-10 -translate-y-1/2 pointer-events-none opacity-30 -z-10 w-[500px] md:w-[600px] lg:w-[700px]">
+                <div className="absolute top-25 sm:top-20 sm:left-10 -translate-y-1/2 pointer-events-none opacity-30 -z-10 max-w-[500px] md:max-w-[600px] lg:max-w-[700px]">
                     <svg
                         width="100%"
                         height="200"
@@ -141,7 +137,7 @@ const Destinations = () => {
                         </g>
                     </svg>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-bold mb-2">Top Trending Destinations</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-2">Top <span className="text-blue-500">Trending</span> Destinations</h2>
                 <p className="text-gray-500 mb-8">
                     Explore the hottest travel spots around the globe with Final Destination.
                 </p>

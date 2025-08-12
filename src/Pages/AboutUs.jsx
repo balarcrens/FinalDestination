@@ -107,17 +107,35 @@ export default function AboutUs() {
                 </div>
             </div>
 
-            {/* Call to Action */}
-            <div className="bg-blue-500 py-12 text-center text-white">
-                <h3 className="text-2xl font-bold mb-4">
-                    Ready to start your adventure?
-                </h3>
-                <p className="mb-6">
-                    Let’s plan your perfect getaway today.
-                </p>
-                <Link to="/contactus" className="bg-white text-blue-500 font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 transition">
-                    Contact Us
-                </Link>
+            <div className="relative overflow-hidden rounded-xl shadow-lg">
+                {/* Background image */}
+                <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{
+                        backgroundImage: `url('/assets/cta-travel-bg.jpeg')`,
+                    }}
+                ></div>
+
+                {/* Soft overlay */}
+                <div className="absolute inset-0 bg-black/50"></div>
+
+                {/* Content */}
+                <div className="relative z-10 py-16 px-6 text-center text-white max-w-4xl mx-auto">
+                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 drop-shadow-md">
+                        Let’s Create Memories That Last Forever ✈️
+                    </h3>
+                    <p className="mb-8 text-base sm:text-lg md:text-xl opacity-95 max-w-2xl mx-auto">
+                        From golden beaches to snowy peaks, we’ll take you beyond the ordinary —
+                        so every journey feels like a story worth telling.
+                    </p>
+
+                    <Link
+                        to="/contactus"
+                        className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    >
+                        Start Your Journey
+                    </Link>
+                </div>
             </div>
         </section>
     );
