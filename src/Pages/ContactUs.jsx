@@ -6,10 +6,10 @@ export default function ContactUs() {
             <div className="p-3 sm:p-5 max-w-6xl mx-auto">
                 {/* Title */}
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    <h2 className="text-4xl font-bold mb-4">
                         Get in Touch
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    <p className="max-w-2xl mx-auto">
                         Planning your dream getaway? Let us help you make it unforgettable.
                         Reach out today and our travel experts will assist you.
                     </p>
@@ -25,7 +25,7 @@ export default function ContactUs() {
                             </div>
                             <div>
                                 <h3 className="font-semibold text-lg">Phone</h3>
-                                <p className="text-gray-600 dark:text-gray-300">+91 9825515123</p>
+                                <p>+91 9825515123</p>
                             </div>
                         </div>
 
@@ -35,7 +35,7 @@ export default function ContactUs() {
                             </div>
                             <div>
                                 <h3 className="font-semibold text-lg">Email</h3>
-                                <p className="text-gray-600 dark:text-gray-300">info@finaldestination.com</p>
+                                <p>info@finaldestination.com</p>
                             </div>
                         </div>
 
@@ -45,7 +45,7 @@ export default function ContactUs() {
                             </div>
                             <div>
                                 <h3 className="font-semibold text-lg">Location</h3>
-                                <p className="text-gray-600 dark:text-gray-300">
+                                <p>
                                     Chikuwadi, Nana varachha, Surat - 395006
                                 </p>
                             </div>
@@ -53,14 +53,14 @@ export default function ContactUs() {
                     </div>
 
                     {/* Contact Form */}
-                    <div className="bg-white dark:bg-gray-900 shadow-lg rounded-2xl p-4 sm:p-8 border border-gray-100 dark:border-gray-800">
+                    <div className="shadow-lg rounded-2xl p-4 sm:p-8 border border-gray-400">
                         <form className="space-y-6">
                             <div>
                                 <label className="block mb-2 font-medium">Name</label>
                                 <input
                                     type="text"
                                     placeholder="Your Name"
-                                    className="input input-bordered w-full"
+                                    className="input p-2 border w-full"
                                 />
                             </div>
 
@@ -69,7 +69,7 @@ export default function ContactUs() {
                                 <input
                                     type="email"
                                     placeholder="you@example.com"
-                                    className="input input-bordered w-full"
+                                    className="input p-2 border w-full"
                                 />
                             </div>
 
@@ -77,11 +77,11 @@ export default function ContactUs() {
                                 <label className="block mb-2 font-medium">Message</label>
                                 <textarea
                                     placeholder="Tell us about your dream trip..."
-                                    className="textarea textarea-bordered w-full h-32"
+                                    className="textarea p-2 border w-full h-32"
                                 ></textarea>
                             </div>
 
-                            <button className="btn btn-primary w-full flex items-center gap-2">
+                            <button className="bg-blue-500 py-2 px-4 rounded-md text-white w-fit flex items-center gap-2">
                                 <Send size={18} /> Send Message
                             </button>
                         </form>

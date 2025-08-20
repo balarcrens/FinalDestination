@@ -1,8 +1,8 @@
 @import "tailwindcss";
-@plugin "daisyui";
 
 * {
     font-family: "Rubik", sans-serif;
+    transition: all 300;
 }
 
 .slider {

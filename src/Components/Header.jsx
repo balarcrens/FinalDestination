@@ -1,16 +1,21 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function Header() {
     const lightLogo = "/assets/header_logo.png";
-    const darkLogo = "/assets/header_logo_dark.png";
     const [isFixed, setIsFixed] = useState(false);
     const [headerHeight, setHeaderHeight] = useState(0);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [user, setUser] = useState(null);
     const headerRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
+        const User = JSON.parse(localStorage.getItem("user"));
+        if (User) setUser(User);
+
         if (headerRef.current) {
             setHeaderHeight(headerRef.current.offsetHeight);
         }
@@ -20,8 +25,18 @@ export default function Header() {
         };
 
         window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
     }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        setUser(null);
+        navigate("/login");
+        toast.success("Logout successfully");
+    };
 
     return (
         <>
@@ -31,40 +46,48 @@ export default function Header() {
                 ref={headerRef}
                 className={`${isFixed ? "fixed top-3 left-0 right-0" : "mt-3"} 
                 mx-auto w-[calc(100%-2rem)] sm:max-w-5xl flex items-center justify-between px-2.5 sm:px-6 py-1
-                bg-white/30 dark:bg-black/30 border backdrop-blur-md rounded-lg
-                transition-all ease-in duration-300 z-50`}
+                border rounded-lg transition-all ease-in duration-300 z-50 backdrop-blur-md bg-white `}
             >
                 {/* Logo */}
                 <div className="flex items-center">
                     <Link to="/">
-                        {/* Light mode logo */}
-                        <img src={lightLogo} alt="Final Destination" className="h-14 w-auto object-contain rounded-lg p-1 dark:hidden" />
-                        {/* Dark mode logo */}
-                        <img src={darkLogo} alt="Final Destination" className="h-14 w-auto object-contain rounded-lg p-1 hidden dark:block" />
+                        <img src={lightLogo} alt="Final Destination" className="h-14 w-auto object-contain rounded-lg p-1" />
                     </Link>
                 </div>
 
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex space-x-5 font-medium">
-                    <Link to="/" className="hover:underline hover:text-[#09AFF4] underline-offset-4">
+                    <Link to="/" className="hover:underline hover:text-[#144565] transition-all duration-300 underline-offset-4">
                         Home
                     </Link>
-                    <Link to="/tourpackages" className="hover:underline hover:text-[#09AFF4] underline-offset-4">
+                    <Link to="/tourpackages" className="hover:underline hover:text-[#144565] transition-all duration-300 underline-offset-4">
                         Packages
                     </Link>
-                    <Link to="/aboutus" className="hover:underline hover:text-[#09AFF4] underline-offset-4">
+                    <Link to="/aboutus" className="hover:underline hover:text-[#144565] transition-all duration-300 underline-offset-4">
                         About
                     </Link>
-                    <Link to="/contactus" className="hover:underline hover:text-[#09AFF4] underline-offset-4">
+                    <Link to="/contactus" className="hover:underline hover:text-[#144565] transition-all duration-300 underline-offset-4">
                         Contact Us
                     </Link>
                 </nav>
 
                 {/* Desktop Login */}
                 <div className="hidden md:flex font-medium">
-                    <Link className="hover:underline hover:text-[#09AFF4] underline-offset-6">
-                        Login
-                    </Link>
+                    {user ? (
+                        <button
+                            onClick={handleLogout}
+                            className="hover:underline hover:text-red-500 transition-all duration-300 underline-offset-6"
+                        >
+                            Logout
+                        </button>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="hover:underline hover:text-[#144565] transition-all duration-300 underline-offset-6"
+                        >
+                            Login
+                        </Link>
+                    )}
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -81,12 +104,21 @@ export default function Header() {
 
             {/* Mobile Dropdown */}
             {menuOpen && (
-                <div className="md:hidden bg-white dark:bg-black/90 backdrop-blur-md border-t p-4 space-y-4 animate-slideDown">
-                    <Link to="/" className="block hover:underline" onClick={() => setMenuOpen(false)}>Home</Link>
-                    <Link to="/tourpackages" className="block hover:underline" onClick={() => setMenuOpen(false)}>Packages</Link>
-                    <Link to="/aboutus" className="block hover:underline" onClick={() => setMenuOpen(false)}>About</Link>
-                    <Link to="/contactus" className="block hover:underline" onClick={() => setMenuOpen(false)}>Contact Us</Link>
-                    <Link className="block hover:underline" onClick={() => setMenuOpen(false)}>Login</Link>
+                <div className="md:hidden bg-white backdrop-blur-md p-6 space-y-4 animate-slideDown">
+                    <Link to="/" className="block hover:underline underline-offset-4" onClick={() => setMenuOpen(false)}>Home</Link>
+                    <Link to="/tourpackages" className="block hover:underline underline-offset-4" onClick={() => setMenuOpen(false)}>Packages</Link>
+                    <Link to="/aboutus" className="block hover:underline underline-offset-4" onClick={() => setMenuOpen(false)}>About</Link>
+                    <Link to="/contactus" className="block hover:underline underline-offset-4" onClick={() => setMenuOpen(false)}>Contact Us</Link>
+                    {user ? (
+                        <button
+                            onClick={() => { handleLogout(); setMenuOpen(false); }}
+                            className="block text-left w-full hover:underline underline-offset-4 text-red-500"
+                        >
+                            Logout
+                        </button>
+                    ) : (
+                        <Link to="/login" className="block hover:underline underline-offset-4" onClick={() => setMenuOpen(false)}>Login</Link>
+                    )}
                 </div>
             )}
         </>
