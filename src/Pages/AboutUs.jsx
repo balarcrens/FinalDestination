@@ -98,26 +98,20 @@ export default function AboutUs() {
                                 onClick={() => setActive(show ? null : idx)}
                             >
                                 {/* Info */}
-                                <div
-                                    className={`transition-opacity duration-300 ${show ? "opacity-0" : "opacity-100 group-hover:opacity-0"
-                                        }`}
-                                >
+                                <div className={`transition-opacity duration-300 ${show ? "opacity-0" : "opacity-100 group-hover:opacity-0"}`}>
                                     <h3 className="font-semibold text-lg">{member.name}</h3>
-                                    <p className="text-gray-600 dark:text-gray-400 text-sm">
-                                        {member.role}
-                                    </p>
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm">{member.role}</p>
                                 </div>
 
                                 {/* Contact Info */}
                                 <div
-                                    className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 bg-white dark:bg-gray-900 ${show ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-                                        }`}
+                                    className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-300 bg-white dark:bg-gray-900 ${show ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
                                 >
                                     <p className="text-gray-700 dark:text-gray-300 text-sm">
-                                        {member.phone}
+                                        <a href={`tel:${member.phone}`}>{member.phone}</a>
                                     </p>
                                     <p className="text-gray-700 dark:text-gray-300 text-sm">
-                                        {member.email}
+                                        <a href={`mailto:${member.email}`}>{member.email}</a>
                                     </p>
                                 </div>
                             </div>
@@ -126,7 +120,7 @@ export default function AboutUs() {
                 </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-xl shadow-lg">
+            <div className="relative overflow-hidden rounded-t-xl shadow-lg">
                 {/* Background image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"

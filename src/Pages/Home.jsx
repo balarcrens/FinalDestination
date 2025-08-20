@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay, Navigation } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import ContactUs from "./ContactUs";
 
 export default function Home() {
     return (
@@ -11,6 +12,7 @@ export default function Home() {
             <Destinations />
             <DealsSection />
             <HiddenGems />
+            <ContactUs />
         </div>
     );
 }

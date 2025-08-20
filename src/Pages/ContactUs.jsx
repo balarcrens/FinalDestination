@@ -1,13 +1,42 @@
 import { Mail, Phone, MapPin, Send, Sun, Handshake, Calendar, Megaphone } from "lucide-react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 export default function ContactUs() {
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+    const onSubmit = async (data) => {
+        try {
+            const formData = new FormData();
+            formData.append("name", data.name);
+            formData.append("email", data.email);
+            formData.append("message", data.message);
+
+            const res = await axios.post(
+                "http://localhost/FinalDestination/FinalDestination-Backend/contact.php",
+                formData
+            );
+
+            if (res.data.success) {
+                toast.success(res.data.message);
+                reset();
+            } else {
+                toast.error(res.data.message || "Failed to send message");
+            }
+        } catch (error) {
+            toast.error("Something went wrong");
+            console.error(error.message);
+        }
+    };
+
     return (
         <section className="py-16">
             <div className="p-3 sm:p-5 max-w-6xl mx-auto">
                 {/* Title */}
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-bold mb-4">
-                        Get in Touch
+                        Get in <span className="text-[#2B7FFF]">Touch</span>
                     </h2>
                     <p className="max-w-2xl mx-auto">
                         Planning your dream getaway? Let us help you make it unforgettable.
@@ -25,7 +54,7 @@ export default function ContactUs() {
                             </div>
                             <div>
                                 <h3 className="font-semibold text-lg">Phone</h3>
-                                <p>+91 9825515123</p>
+                                <a href="tel:+91 9825515123"><p>+91 9825515123</p></a>
                             </div>
                         </div>
 
@@ -45,23 +74,23 @@ export default function ContactUs() {
                             </div>
                             <div>
                                 <h3 className="font-semibold text-lg">Location</h3>
-                                <p>
-                                    Chikuwadi, Nana varachha, Surat - 395006
-                                </p>
+                                <p> Chikuwadi, Nana varachha, Surat - 395006 </p>
                             </div>
                         </div>
                     </div>
 
                     {/* Contact Form */}
-                    <div className="shadow-lg rounded-2xl p-4 sm:p-8 border border-gray-400">
-                        <form className="space-y-6">
+                    <div className="shadow-md rounded-2xl p-4 sm:p-8 border border-gray-400">
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                             <div>
                                 <label className="block mb-2 font-medium">Name</label>
                                 <input
                                     type="text"
                                     placeholder="Your Name"
-                                    className="input p-2 border w-full"
+                                    {...register("name", { required: "Name is required" })}
+                                    className="p-2 border w-full"
                                 />
+                                {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                             </div>
 
                             <div>
@@ -69,19 +98,26 @@ export default function ContactUs() {
                                 <input
                                     type="email"
                                     placeholder="you@example.com"
-                                    className="input p-2 border w-full"
+                                    {...register("email", { required: "Email is required" })}
+                                    className="p-2 border w-full"
                                 />
+                                {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                             </div>
 
                             <div>
                                 <label className="block mb-2 font-medium">Message</label>
                                 <textarea
                                     placeholder="Tell us about your dream trip..."
-                                    className="textarea p-2 border w-full h-32"
+                                    {...register("message", { required: "Message is required" })}
+                                    className="p-2 border w-full h-32"
                                 ></textarea>
+                                {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
                             </div>
 
-                            <button className="bg-blue-500 py-2 px-4 rounded-md text-white w-fit flex items-center gap-2">
+                            <button
+                                type="submit"
+                                className="bg-blue-500 py-2 px-4 rounded-md text-white flex items-center gap-2"
+                            >
                                 <Send size={18} /> Send Message
                             </button>
                         </form>
