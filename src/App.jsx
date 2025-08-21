@@ -9,6 +9,7 @@ import Login from "./Pages/Login"
 import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./Components/ScrollToTop"
 import AddPackage from "./Pages/AddPackage"
+import Package from "./Pages/Package"
 
 function App() {
     return (
@@ -20,7 +21,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/contactus" element={<ContactUs />} />
                 <Route path="/aboutus" element={<AboutUs />} />
-                <Route path="/tourpackages" element={<AddPackage />} />
+                <Route path="/tourpackages" element={<Package />} />
+                <Route path="/addtourpackages" element={<AddPackage />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
             </Routes>
