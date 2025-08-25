@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 export default function Packages() {
     const [tours, setTours] = useState([]);
@@ -16,7 +17,7 @@ export default function Packages() {
         const fetchTours = async () => {
             try {
                 const res = await axios.get(
-                    "http://localhost/FinalDestination/FinalDestination-Backend/getAllTours.php"
+                    "http://localhost/FinalDestination/Backend/getAllTours.php"
                 );
                 setTours(res.data);
                 setFilteredTours(res.data);
@@ -84,7 +85,7 @@ export default function Packages() {
         <div className="min-h-screen py-6">
             <div className="max-w-5xl mx-auto px-2">
                 <div className="mt-2">
-                    <FilterBarResponsive
+                    <FilterBar
                         filters={filters}
                         setFilters={setFilters}
                         onReset={resetFilters}
@@ -94,16 +95,15 @@ export default function Packages() {
                 <div className="grid sm:grid-cols-3 grid-cols-2 gap-2 sm:gap-6 mt-6">
                     <div className="sm:col-span-3 col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-6">
                         {filteredTours.map((tour) => (
-                            <div
-                                key={tour.id}
-                                className="bg-white border border-gray-200 rounded-xl hover:shadow-lg transition p-1.5 sm:p-3 flex flex-col"
-                            >
+                            <Link key={tour.id} to={`/package/${tour.tour_name}`} className="bg-white border border-gray-200 group rounded-xl hover:shadow-lg transition p-1.5 sm:p-3 flex flex-col" >
                                 {tour.poster ? (
-                                    <img
-                                        src={`http://localhost/FinalDestination/FinalDestination-Backend/uploads/${tour.poster}`}
-                                        alt={tour.tour_name}
-                                        className="w-full h-48 object-cover rounded-lg"
-                                    />
+                                    <div className="w-full h-48 overflow-hidden rounded-lg">
+                                        <img
+                                            src={`http://localhost/FinalDestination/Backend/uploads/${tour.poster}`}
+                                            alt={tour.tour_name}
+                                            className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-115"
+                                        />
+                                    </div>
                                 ) : (
                                     <div className="w-full h-48 flex items-center justify-center bg-gray-200 rounded-lg text-gray-500">
                                         No Image
@@ -120,20 +120,20 @@ export default function Packages() {
                                             ₹{tour.price}
                                         </p>
                                         <button className="text-sm ml-auto bg-blue-600 w-fit hover:bg-blue-700 text-white py-1 px-2 rounded-xl">
-                                            BookNow
+                                            Book Now
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
-function FilterBarResponsive({ filters, setFilters, onReset }) {
+function FilterBar({ filters, setFilters, onReset }) {
     const handleChange = (key, value) => {
         setFilters((prev) => ({ ...prev, [key]: value }));
     };

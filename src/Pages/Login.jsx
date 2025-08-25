@@ -10,7 +10,7 @@ export default function Login() {
     const onSubmit = async (data) => {
         try {
             const res = await axios.post(
-                "http://localhost/FinalDestination/FinalDestination-Backend/login.php",
+                "http://localhost/FinalDestination/Backend/login.php",
                 data,
                 { headers: { "Content-Type": "application/json" } }
             );

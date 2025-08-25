@@ -14,7 +14,7 @@ export default function ContactUs() {
             formData.append("message", data.message);
 
             const res = await axios.post(
-                "http://localhost/FinalDestination/FinalDestination-Backend/contact.php",
+                "http://localhost/FinalDestination/Backend/contact.php",
                 formData
             );
 

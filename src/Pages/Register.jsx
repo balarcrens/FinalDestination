@@ -15,7 +15,7 @@ export default function Register() {
             });
 
             const res = await axios.post(
-                "http://localhost/FinalDestination/FinalDestination-Backend/register.php",
+                "http://localhost/FinalDestination/Backend/register.php",
                 formData
             );
 

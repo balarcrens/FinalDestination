@@ -30,7 +30,7 @@ export default function AddPackage() {
             }
 
             const res = await axios.post(
-                "http://localhost/FinalDestination/FinalDestination-Backend/addTour.php",
+                "http://localhost/FinalDestination/Backend/addTour.php",
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
