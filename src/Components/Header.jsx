@@ -46,7 +46,7 @@ export default function Header() {
                 ref={headerRef}
                 className={`${isFixed ? "fixed top-3 left-0 right-0" : "mt-3"} 
                 mx-auto w-[calc(100%-2rem)] sm:max-w-5xl flex items-center justify-between px-2.5 sm:px-6 py-1
-                border rounded-lg transition-all ease-in duration-300 z-50 backdrop-blur-md bg-white `}
+                border rounded-lg transition-all ease-in duration-300 z-50 backdrop-blur-md bg-white/70 `}
             >
                 {/* Logo */}
                 <div className="flex items-center">
