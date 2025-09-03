@@ -95,12 +95,12 @@ export default function Packages() {
                 <div className="grid sm:grid-cols-3 grid-cols-2 gap-2 sm:gap-6 mt-6">
                     <div className="sm:col-span-3 col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-6">
                         {filteredTours.map((tour) => (
-                            <Link key={tour.id} to={`/package/${tour.tour_name}`} className="bg-white border border-gray-200 group rounded-xl hover:shadow-lg transition p-1.5 sm:p-3 flex flex-col" >
+                            <Link key={tour.id} to={`/package/${tour.title}`} className="bg-white border border-gray-200 group rounded-xl hover:shadow-lg transition p-1.5 sm:p-3 flex flex-col" >
                                 {tour.poster ? (
                                     <div className="w-full h-48 overflow-hidden rounded-lg">
                                         <img
                                             src={`http://localhost/FinalDestination/Backend/uploads/${tour.poster}`}
-                                            alt={tour.tour_name}
+                                            alt={tour.title}
                                             className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-115"
                                         />
                                     </div>
@@ -110,7 +110,7 @@ export default function Packages() {
                                     </div>
                                 )}
                                 <div className="mt-3 flex-1 flex flex-col">
-                                    <h3 className="text-lg font-semibold">{tour.tour_name}</h3>
+                                    <h3 className="text-lg font-semibold">{tour.title}</h3>
                                     <p className="text-gray-600 text-sm">{tour.location}</p>
                                     <p className="mt-2 text-gray-700 text-sm line-clamp-2">
                                         {tour.description}

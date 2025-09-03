@@ -8,9 +8,9 @@ import Register from "./Pages/Register"
 import Login from "./Pages/Login"
 import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./Components/ScrollToTop"
-import AddPackage from "./Pages/AddPackage"
 import Package from "./Pages/Package"
 import PackageDetail from "./Pages/PackageDetail"
+import AdminDashboard from "./Admin/AdminDashboard"
 
 function App() {
     return (
@@ -24,7 +24,7 @@ function App() {
                 <Route path="/aboutus" element={<AboutUs />} />
                 <Route path="/tourpackages" element={<Package />} />
                 <Route path="/package/:tour_name" element={<PackageDetail />} />
-                <Route path="/addtourpackages" element={<AddPackage />} />
+                <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
             </Routes>

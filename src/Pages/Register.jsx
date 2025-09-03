@@ -20,17 +20,14 @@ export default function Register() {
             );
 
             if (res.data.success) {
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify({ name: data.name, email: data.email })
-                );
+                localStorage.setItem("user", JSON.stringify(res.data.user));
                 toast.success("Registration successfully");
                 navigate("/");
                 window.location.reload();
             } else {
                 toast.error(res.data.message || "Login failed");
             }
-            
+
             reset();
         } catch (error) {
             toast.error("Something went wrong");

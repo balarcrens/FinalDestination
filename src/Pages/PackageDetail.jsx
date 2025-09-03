@@ -5,6 +5,7 @@ export default function PackageDetail() {
     const { tour_name } = useParams();
     const [packageData, setPackageData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [selectedImg, setSelectedImg] = useState(null);
 
     useEffect(() => {
         fetch("http://localhost/FinalDestination/Backend/getTour.php", {
@@ -69,11 +70,17 @@ export default function PackageDetail() {
                 <div className="bg-white/90 backdrop-blur rounded-xl overflow-hidden border border-gray-100">
                     {/* Poster */}
                     {packageData.poster ? (
-                        <img
-                            src={`http://localhost/FinalDestination/Backend/uploads/${packageData.poster}`}
-                            alt={packageData.title}
-                            className="w-full h-[420px] object-cover rounded-xl"
-                        />
+                        <div className="relative h-[420px] rounded-xl overflow-hidden">
+                            <img
+                                src={`http://localhost/FinalDestination/Backend/uploads/${packageData.poster}`}
+                                alt={packageData.title}
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6">
+                                <h1 className="text-3xl md:text-5xl font-bold text-white">{packageData.title}</h1>
+                                <p className="text-gray-200 mt-2">📍 {packageData.location}</p>
+                            </div>
+                        </div>
                     ) : (
                         <div className="w-full h-[420px] flex items-center justify-center bg-gray-200 text-gray-500 text-xl font-medium">
                             No Image Available
@@ -91,13 +98,35 @@ export default function PackageDetail() {
                                     key={i}
                                     className="overflow-hidden rounded-xl shadow-md hover:shadow-xl transition duration-300"
                                 >
-                                    <img
-                                        src={`http://localhost/FinalDestination/Backend/uploads/${img}`}
-                                        alt={`${packageData.title} ${i + 1}`}
-                                        className="w-full h-40 object-cover hover:scale-110 transition duration-500"
-                                    />
+                                    <div onClick={() => setSelectedImg(img)} className="relative overflow-hidden rounded-xl group">
+                                        <img
+                                            src={`http://localhost/FinalDestination/Backend/uploads/${img}`}
+                                            className="w-full h-40 object-cover group-hover:scale-110 transition duration-500"
+                                        />
+                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white font-semibold transition">
+                                            View
+                                        </div>
+                                    </div>
+
                                 </div>
                             ))}
+                        </div>
+                    )}
+
+                    {/* Show Gallery Image */}
+                    {selectedImg && (
+                        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50" onClick={() => setSelectedImg(null)}>
+                            <img
+                                src={`http://localhost/FinalDestination/Backend/uploads/${selectedImg}`}
+                                alt="Selected"
+                                className="max-h-[90%] max-w-[95%] rounded-lg shadow-lg"
+                                onClick={(e) => e.stopPropagation()}
+                            />
+                            <button onClick={() => setSelectedImg(null)}
+                                className="absolute top-6 right-6 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition"
+                            >
+                                ✕
+                            </button>
                         </div>
                     )}
 
@@ -112,20 +141,15 @@ export default function PackageDetail() {
 
                         <div className="mt-10 flex flex-wrap justify-center sm:justify-between items-center border-t border-gray-200 pt-6">
                             <div>
-                                <p className="text-xl text-gray-800 font-bold flex items-center">
-                                    <strike>₹{BeforediscountPrice}</strike>
-                                    <p className="text-green-600 text-sm font-semibold ml-2">
-                                        {discountPercent}% OFF
-                                    </p>
-                                </p>
-
-                                <p className="text-3xl font-bold flex items-center text-blue-600">
-                                    ₹{packageData.price}
-                                    <span className="text-sm mx-1 text-black font-medium"> Per Person</span>
-                                </p>
+                                <div className="flex items-baseline space-x-2">
+                                    <span className="text-xl line-through text-gray-600">₹{BeforediscountPrice}</span>
+                                    <span className="text-green-600 text-lg font-semibold">{discountPercent}% OFF</span>
+                                </div>
+                                <p className="text-4xl font-bold text-blue-600">₹{packageData.price}</p>
+                                <p className="text-sm text-gray-500">Per Person</p>
                             </div>
 
-                            <button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-2xl text-lg font-semibold transition shadow-lg hover:shadow-xl">
+                            <button className="bg-blue-700 hover:bg-indigo-700 text-white px-10 py-3 rounded-xl text-lg font-medium tracking-wide shadow hover:shadow-2xl transition-all duration-300 ease-in-out ">
                                 Book Now
                             </button>
                         </div>

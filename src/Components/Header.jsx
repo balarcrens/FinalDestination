@@ -72,6 +72,7 @@ export default function Header() {
                     <Link to="/contactus" className="hover:underline hover:text-[#144565] transition-all duration-300 underline-offset-4">
                         Contact Us
                     </Link>
+                    {user?.role === "admin" && <Link to="/admin" className="hover:underline hover:text-[#144565] transition-all duration-300 underline-offset-4"> Admin </Link>}
                 </nav>
 
                 {/* Desktop Login */}
@@ -112,6 +113,7 @@ export default function Header() {
                     <Link to="/tourpackages" className="block hover:underline underline-offset-4" onClick={() => setMenuOpen(false)}>Packages</Link>
                     <Link to="/aboutus" className="block hover:underline underline-offset-4" onClick={() => setMenuOpen(false)}>About</Link>
                     <Link to="/contactus" className="block hover:underline underline-offset-4" onClick={() => setMenuOpen(false)}>Contact Us</Link>
+                    {user?.role === "admin" && <Link to="/admin" className="block hover:underline underline-offset-4" onClick={() => setMenuOpen(false)}> Admin </Link>}
                     {user ? (
                         <button
                             onClick={() => { handleLogout(); setMenuOpen(false); }}
