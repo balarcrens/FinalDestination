@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -94,11 +95,11 @@ const HeroSection = () => {
 
 const Destinations = () => {
     const destinations = [
-        { name: "Europe", img: "/assets/europe2.png" },
-        { name: "Kerala", img: "/assets/kerala-nwdepk.webp" },
-        { name: "Bali", img: "/assets/bali.png" },
-        { name: "Kashmir", img: "/assets/kashmir-handpckd.webp" },
-        { name: "Vietnam", img: "/assets/vietnam-handpckd.webp" },
+        { name: "Europe", img: "/assets/europe2.png", slug: "Europe Tour" },
+        { name: "Kerala", img: "/assets/kerala-nwdepk.webp", slug: "Kerala Tour" },
+        { name: "Bali", img: "/assets/bali.png", slug: "Bali Tour" },
+        { name: "Kashmir", img: "/assets/kashmir-handpckd.webp", slug: "Kashmir Tour" },
+        { name: "Vietnam", img: "/assets/vietnam-handpckd.webp", slug: "Vietnam Tour" },
     ]
     return (
         <>
@@ -145,12 +146,14 @@ const Destinations = () => {
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-7">
                     {destinations.map((dest, index) => (
-                        <div key={index} className="flex flex-col group items-center overflow-hidden text-center" >
-                            <div className="w-full h-50 rounded-2xl shadow-md overflow-hidden">
-                                <img src={dest.img} alt={dest.name} className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-115" />
+                        <Link key={index} to={`/package/${dest.slug}`}>
+                            <div className="flex flex-col group items-center overflow-hidden text-center" >
+                                <div className="w-full h-50 rounded-2xl shadow-md overflow-hidden">
+                                    <img src={dest.img} alt={dest.name} className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-115" />
+                                </div>
+                                <p className="mt-3 text-lg group-hover:text-[#09AFF4] font-semibold">{dest.name}</p>
                             </div>
-                            <p className="mt-3 text-lg group-hover:text-[#09AFF4] font-semibold">{dest.name}</p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
@@ -160,12 +163,12 @@ const Destinations = () => {
 
 const DealsSection = () => {
     const deals = [
-        { name: "KASHMIR", nights: 5, days: 6, img: "/assets/kashmir-handpckd.webp" },
-        { name: "KERALA", nights: 4, days: 5, img: "/assets/kerala-handpckd.webp" },
-        { name: "HIMACHAL PRADESH", nights: 5, days: 6, img: "/assets/himachal-handpckd.webp" },
-        { name: "THAILAND", nights: 4, days: 5, img: "/assets/thailand.jpeg" },
-        { name: "BALI", nights: 4, days: 5, img: "/assets/bali-sec.png" },
-        { name: "SINGAPORE", nights: 3, days: 4, img: "/assets/singapore-handpckd.webp" },
+        { name: "KASHMIR", nights: 5, days: 6, img: "/assets/kashmir-handpckd.webp", slug: "Kashmir Tour" },
+        { name: "KERALA", nights: 4, days: 5, img: "/assets/kerala-handpckd.webp", slug: "Kerala Tour" },
+        { name: "HIMACHAL PRADESH", nights: 5, days: 6, img: "/assets/himachal-handpckd.webp", slug: "Himachal Pradesh Tour" },
+        { name: "THAILAND", nights: 4, days: 5, img: "/assets/thailand.jpeg", slug: "Thailand Tour" },
+        { name: "BALI", nights: 4, days: 5, img: "/assets/bali-sec.png", slug: "Bali Tour" },
+        { name: "SINGAPORE", nights: 3, days: 4, img: "/assets/singapore-handpckd.webp", slug: "Singapore Tour" },
     ];
 
     return (
@@ -196,18 +199,20 @@ const DealsSection = () => {
     );
 };
 
-const DealCard = ({ name, nights, days, img, tall }) => (
+const DealCard = ({ name, nights, days, img, tall, slug }) => (
     <div className={`relative rounded-2xl overflow-hidden group ${tall ? "h-48 sm:h-100 md:h-116" : "h-48 md:h-56"}`}>
-        <img
-            src={img}
-            alt={name}
-            className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-        <div className="absolute bottom-3 left-3 text-white">
-            <h3 className="font-bold text-lg">{name}</h3>
-            <p className="text-sm">{nights} Nights / {days} Days</p>
-        </div>
+        <Link to={`/package/${slug}`}>
+            <img
+                src={img}
+                alt={name}
+                className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <div className="absolute bottom-3 left-3 text-white">
+                <h3 className="font-bold text-lg">{name}</h3>
+                <p className="text-sm">{nights} Nights / {days} Days</p>
+            </div>
+        </Link>
     </div>
 );
 
