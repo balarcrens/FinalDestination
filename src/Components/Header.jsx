@@ -63,9 +63,6 @@ export default function Header() {
                     <Link to="/tourpackages" className="hover:underline hover:text-[#144565] transition-all duration-300 underline-offset-4">
                         Packages
                     </Link>
-                    <Link to="/addtourpackages" className="hover:underline hover:text-[#144565] transition-all duration-300 underline-offset-4">
-                        AddPackages
-                    </Link>
                     <Link to="/aboutus" className="hover:underline hover:text-[#144565] transition-all duration-300 underline-offset-4">
                         About
                     </Link>

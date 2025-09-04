@@ -49,7 +49,7 @@ export default function AddPackage() {
     };
 
     return (
-        <div className="flex items-center md:justify-center">
+        <div className="flex max-w-full items-center md:justify-center">
             <div className="w-full max-w-md md:max-w-2xl relative group px-2 py-4 lg:p-8">
                 <h2 className="absolute inset-x-0 text-3xl font-extrabold text-center text-gray-800 mb-6 
            transition-all duration-500 opacity-100 group-hover:opacity-0 group-hover:-translate-y-2">

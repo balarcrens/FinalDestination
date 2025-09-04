@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, Calendar, MapPin, IndianRupee } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function ShowPackage() {
@@ -87,57 +87,98 @@ export default function ShowPackage() {
     };
 
     return (
-        <div className="md:p-6">
+        <>
             <h2 className="text-2xl font-bold mb-4">All Tour Packages</h2>
 
-            {/* Table */}
-            <div className="overflow-x-auto">
-                <table className="min-w-full border border-gray-200">
-                    <thead className="bg-gray-100">
-                        <tr>
-                            <th className="px-4 py-2 border">ID</th>
-                            <th className="px-4 py-2 border">Title</th>
-                            <th className="px-4 py-2 border">Price</th>
-                            <th className="px-4 py-2 border">Dates</th>
-                            <th className="px-4 py-2 border">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {packages && packages.length > 0 ? (
-                            packages.map((pkg) => (
-                                <tr key={pkg.id}>
-                                    <td className="border px-4 py-2">{pkg.id}</td>
-                                    <td className="border px-4 py-2">{pkg.title}</td>
-                                    <td className="border px-4 py-2">₹{pkg.price}</td>
-                                    <td className="border px-4 py-2">{pkg.start_date} → {pkg.end_date}</td>
-                                    <td className="border px-4 py-2">
-                                        <button onClick={() => handleEdit(pkg)} className="text-blue-600">
+            {packages && packages.length > 0 ? (
+                <div className="w-full overflow-x-auto">
+                    <table className="min-w-full border border-gray-200 rounded-lg shadow text-sm text-left bg-white">
+                        <thead className="sticky top-0 z-10">
+                            <tr className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+                                <th className="px-4 py-3 font-semibold">ID</th>
+                                <th className="px-4 py-3 font-semibold">Title</th>
+                                <th className="px-4 py-3 font-semibold">Location</th>
+                                <th className="px-4 py-3 font-semibold">Price</th>
+                                <th className="px-4 py-3 font-semibold">Dates</th>
+                                <th className="px-4 py-3 font-semibold text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {packages.map((pkg, idx) => (
+                                <tr
+                                    key={pkg.id}
+                                    className={`${idx % 2 === 0 ? "bg-gray-50" : "bg-white"
+                                        } hover:bg-indigo-50 transition`}
+                                >
+                                    <td className="px-4 py-3 text-gray-700">{pkg.id}</td>
+
+                                    {/* Title with ellipsis */}
+                                    <td
+                                        className="px-4 py-3 font-medium text-gray-900 truncate max-w-[180px]"
+                                        title={pkg.title}
+                                    >
+                                        {pkg.title}
+                                    </td>
+
+                                    {/* Location with icon + ellipsis */}
+                                    <td
+                                        className="px-4 py-3 text-gray-700 truncate max-w-[200px]"
+                                        title={pkg.location}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <MapPin size={16} className="text-red-500 shrink-0" />
+                                            <span className="truncate">{pkg.location}</span>
+                                        </div>
+                                    </td>
+
+                                    {/* Price */}
+                                    <td className="px-4 py-3 text-gray-700 whitespace-nowrap">
+                                        <div className="flex items-center gap-2">
+                                            <IndianRupee size={16} className="text-green-600" />
+                                            {pkg.price}
+                                        </div>
+                                    </td>
+
+                                    {/* Dates */}
+                                    <td className="px-4 py-3 text-gray-700 whitespace-nowrap">
+                                        <div className="flex items-center gap-2">
+                                            <Calendar size={16} className="text-gray-500" />
+                                            {pkg.start_date} → {pkg.end_date}
+                                        </div>
+                                    </td>
+
+                                    {/* Actions */}
+                                    <td className="px-4 py-3 text-center whitespace-nowrap flex justify-center gap-2">
+                                        <button
+                                            onClick={() => handleEdit(pkg)}
+                                            className="text-blue-600 hover:text-blue-800"
+                                        >
                                             <Edit size={18} />
                                         </button>
-                                        <button onClick={() => handleDelete(pkg.id)} className="text-red-600 ml-2">
+                                        <button
+                                            onClick={() => handleDelete(pkg.id)}
+                                            className="text-red-600 hover:text-red-800"
+                                        >
                                             <Trash2 size={18} />
                                         </button>
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="6" className="text-center py-4 text-gray-500">
-                                    No packages found
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            ) : (
+                <p className="text-red-500 font-semibold text-center mt-6">
+                    No packages found.
+                </p>
+            )}
 
             {/* Edit Modal */}
             {showModal && (
-                <div className="fixed inset-0 backdrop-blur-3xl bg-opacity-50 flex items-center justify-center">
+                <div className="fixed inset-0 backdrop-blur-3xl bg-black/30 flex items-center justify-center px-4">
                     <div className="bg-white p-6 rounded-lg w-full max-w-lg shadow-lg">
                         <h3 className="text-xl font-bold mb-4">Edit Package</h3>
                         <form onSubmit={handleUpdate} className="space-y-4">
-                            title:
                             <input
                                 type="text"
                                 value={editData.title}
@@ -145,8 +186,6 @@ export default function ShowPackage() {
                                 placeholder="Title"
                                 className="w-full p-2 border rounded"
                             />
-
-                            location:
                             <input
                                 type="text"
                                 value={editData.location}
@@ -154,8 +193,6 @@ export default function ShowPackage() {
                                 placeholder="Location"
                                 className="w-full p-2 border rounded"
                             />
-
-                            price:
                             <input
                                 type="number"
                                 value={editData.price}
@@ -163,9 +200,7 @@ export default function ShowPackage() {
                                 placeholder="Price"
                                 className="w-full p-2 border rounded"
                             />
-
-                            date:
-                            <div className="grid grid-cols-2 gap-2">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 <input
                                     type="date"
                                     value={editData.start_date}
@@ -179,7 +214,6 @@ export default function ShowPackage() {
                                     className="w-full p-2 border rounded"
                                 />
                             </div>
-
                             <div className="flex justify-end gap-3 mt-4">
                                 <button
                                     type="button"
@@ -199,6 +233,6 @@ export default function ShowPackage() {
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 }

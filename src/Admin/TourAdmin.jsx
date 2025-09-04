@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import AddPackage from "./AddPackage";
-import ShowPackage from "./ShowPackage";
+import AddPackage from "./TourPackage/AddPackage";
+import ShowPackage from "./TourPackage/ShowPackage";
 
 export default function TourAdmin() {
     const addRef = useRef(null);
