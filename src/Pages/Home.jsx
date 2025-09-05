@@ -4,7 +4,8 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import ContactUs from "./ContactUs";
-import heroVideo from "/assets/hero-video.mp4";
+import { useState } from 'react';
+import axios from 'axios';
 
 export default function Home() {
     return (
@@ -19,8 +20,32 @@ export default function Home() {
 }
 
 const HeroSection = () => {
+    const [query, setQuery] = useState("");
+    const [tours, setTours] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const heroVideo = "https://static.vecteezy.com/system/resources/previews/007/536/781/mp4/aerial-view-of-white-sand-beach-and-water-surface-texture-foamy-waves-with-sky-beautiful-tropical-beach-amazing-sandy-coastline-with-white-sea-waves-nature-seascape-and-summer-concept-free-video.mp4"
+
+    const handleSearch = async () => {
+        if (!query.trim()) {
+            setTours([]); // clear dropdown if input is empty
+            return;
+        }
+        setLoading(true);
+        try {
+            const response = await axios.get(
+                `http://localhost/FinalDestination/Backend/searchTour.php?q=${encodeURIComponent(query)}`
+            );
+            setTours(Array.isArray(response.data) ? response.data : []);
+        } catch (error) {
+            console.error("Search failed:", error);
+            setTours([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <section className="relative flex flex-col items-center justify-center text-center px-3 text-white h-[80vh] sm:h-[70vh] md:h-[80vh] overflow-hidden">
+        <section className="relative flex flex-col items-center justify-center text-center px-3 text-white h-[80vh] sm:h-[70vh] md:h-[80vh] overflow-visible">
             {/* Video Background */}
             <div className="absolute inset-0 w-full h-full overflow-hidden">
                 <video
@@ -29,54 +54,74 @@ const HeroSection = () => {
                     loop
                     muted
                     playsInline
-                    className="w-full h-full object-cover md:object-contain"
+                    className="w-full h-full object-cover"
                 />
             </div>
 
             {/* Content */}
-            <div className="relative z-10 max-w-3xl px-4">
+            <div className="relative z-20 max-w-3xl px-4">
+                <h1 className="text-2xl md:text-4xl font-bold mb-2">
+                    Dream Destination with Final Destination
+                </h1>
                 <h2 className="text-lg md:text-2xl font-semibold mb-6">
                     Where Every Experience Counts!
                 </h2>
 
                 {/* Search Box */}
-                <div className="flex items-center bg-white rounded-full p-1 shadow-lg max-w-lg mx-auto">
-                    <input
-                        type="text"
-                        placeholder="Enter Your Dream Destination!"
-                        className="flex-grow px-2 py-2 text-gray-700 rounded-l-full focus:outline-none"
-                    />
-                    <button className="bg-orange-500 cursor-pointer text-white px-6 py-2 rounded-full sm:rounded-r-full font-semibold hover:bg-orange-600 transition">
-                        Search
-                    </button>
-                </div>
-
-                {/* Categories */}
-                <div className="flex flex-wrap justify-center mt-6 gap-3">
-                    {[
-                        { name: "Honeymoon", img: "/assets/australia-banner-home.webp" },
-                        { name: "Pilgrimage", img: "/assets/dubai_newbb.png" },
-                        { name: "Luxury", img: "/assets/europe-banner-home.webp" },
-                        { name: "Adventure", img: "/assets/kerala_newbb.png" },
-                    ].map((cat, idx) => (
-                        <div
-                            key={idx}
-                            className="flex items-center group border bg-black/30 border-white/30 backdrop-blur-sm text-white rounded-full px-1 py-1 shadow cursor-pointer transition hover:scale-105"
+                <div className="relative max-w-lg mx-auto">
+                    <div className="flex items-center bg-white rounded-full p-1 shadow-2xl">
+                        <input
+                            type="text"
+                            placeholder="Enter Your Dream Destination!"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            className="flex-grow px-4 py-3 text-gray-700 rounded-l-full focus:outline-none text-base"
+                        />
+                        <button
+                            onClick={handleSearch}
+                            className="bg-orange-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-600 transition-all shadow"
                         >
-                            <img
-                                src={cat.img}
-                                alt={cat.name}
-                                className="w-8 h-8 rounded-full group-hover:scale-110 transition mr-2 object-cover"
-                            />
-                            <span className="text-sm font-medium">{cat.name}</span>
+                            Search
+                        </button>
+                    </div>
+
+                    {/* Search Results */}
+                    {(loading || tours.length > 0) && query.trim() !== "" && (
+                        <div className="absolute top-full left-0 w-full mt-2 bg-white text-gray-900 rounded-xl shadow-2xl max-h-60 overflow-y-auto z-50 border">
+                            {loading && <p className="p-4 text-gray-500 text-center">Searching...</p>}
+                            {!loading && tours.length === 0 && (
+                                <p className="p-4 text-gray-500 text-center">
+                                    No tours found for "{query}"
+                                </p>
+                            )}
+                            {tours.length > 0 && (
+                                <div className="bg-white text-gray-900 rounded-xl p-2 shadow max-h-60">
+                                    {tours.map((tour) => (
+                                        <Link key={tour.id} to={`/package/${tour.title}`}>
+                                            <div className="flex items-center gap-3 border-b py-2">
+                                                <img
+                                                    src={`http://localhost/FinalDestination/Backend/uploads/${tour.image}`}
+                                                    alt={tour.title}
+                                                    className="w-12 h-12 rounded object-cover"
+                                                />
+                                                <div className="w-full">
+                                                    <p className="font-semibold">{tour.title}</p>
+                                                    <p className="text-sm text-gray-600">
+                                                        {tour.location} — ${tour.price}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
         </section>
     );
 };
-
 
 const Destinations = () => {
     const destinations = [

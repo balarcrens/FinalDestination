@@ -10,7 +10,7 @@ export default function UserBookings() {
 
     useEffect(() => {
         if (user?.id) fetchBookings();
-    }, [user]);
+    }, []);
 
     const fetchBookings = async () => {
         try {
