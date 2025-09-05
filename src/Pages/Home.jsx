@@ -29,30 +29,30 @@ const HeroSection = () => {
                     loop
                     muted
                     playsInline
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover md:object-contain"
                 />
             </div>
 
             {/* Content */}
-            <div className="relative z-10 max-w-3xl">
+            <div className="relative z-10 max-w-3xl px-4">
                 <h2 className="text-lg md:text-2xl font-semibold mb-6">
                     Where Every Experience Counts!
                 </h2>
 
                 {/* Search Box */}
-                <div className="flex items-center bg-white rounded-full p-2 shadow-lg max-w-lg mx-auto">
+                <div className="flex items-center bg-white rounded-full p-1 shadow-lg max-w-lg mx-auto">
                     <input
                         type="text"
                         placeholder="Enter Your Dream Destination!"
                         className="flex-grow px-2 py-2 text-gray-700 rounded-l-full focus:outline-none"
                     />
-                    <button className="bg-orange-500 cursor-pointer text-white px-6 py-2 rounded-full font-semibold hover:bg-orange-600 transition">
+                    <button className="bg-orange-500 cursor-pointer text-white px-6 py-2 rounded-full sm:rounded-r-full font-semibold hover:bg-orange-600 transition">
                         Search
                     </button>
                 </div>
 
                 {/* Categories */}
-                <div className="flex flex-wrap justify-center rounded-full mt-6 gap-2">
+                <div className="flex flex-wrap justify-center mt-6 gap-3">
                     {[
                         { name: "Honeymoon", img: "/assets/australia-banner-home.webp" },
                         { name: "Pilgrimage", img: "/assets/dubai_newbb.png" },
@@ -61,7 +61,7 @@ const HeroSection = () => {
                     ].map((cat, idx) => (
                         <div
                             key={idx}
-                            className="flex items-center group border bg-black/30 border-white/30 backdrop-blur-sm text-white rounded-full px-2 py-2 shadow cursor-pointer transition"
+                            className="flex items-center group border bg-black/30 border-white/30 backdrop-blur-sm text-white rounded-full px-1 py-1 shadow cursor-pointer transition hover:scale-105"
                         >
                             <img
                                 src={cat.img}
