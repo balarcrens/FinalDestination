@@ -8,6 +8,9 @@ export default function ShowPackage() {
     const [editData, setEditData] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
     // Fetch all tours
     const fetchTours = async () => {
         try {
@@ -23,6 +26,10 @@ export default function ShowPackage() {
             toast.error("Error fetching data");
         }
     };
+
+    const totalPages = Math.ceil(packages.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentData = packages.slice(startIndex, startIndex + itemsPerPage);
 
     useEffect(() => {
         fetchTours();
@@ -90,10 +97,10 @@ export default function ShowPackage() {
         <>
             <h2 className="text-2xl font-bold mb-4">All Tour Packages</h2>
 
-            {packages && packages.length > 0 ? (
-                <div className="w-full overflow-x-auto">
+            {currentData && currentData.length > 0 ? (
+                <div className="w-full sm:overflow-x-auto lg:overflow-x-visible">
                     <table className="min-w-full border border-gray-200 rounded-lg shadow text-sm text-left bg-white">
-                        <thead className="sticky top-0 z-10">
+                        <thead className="sticky top-0">
                             <tr className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
                                 <th className="px-4 py-3 font-semibold">ID</th>
                                 <th className="px-4 py-3 font-semibold">Title</th>
@@ -104,7 +111,7 @@ export default function ShowPackage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {packages.map((pkg, idx) => (
+                            {currentData.map((pkg, idx) => (
                                 <tr
                                     key={pkg.id}
                                     className={`${idx % 2 === 0 ? "bg-gray-50" : "bg-white"
@@ -112,7 +119,7 @@ export default function ShowPackage() {
                                 >
                                     <td className="px-4 py-3 text-gray-700">{pkg.id}</td>
 
-                                    {/* Title with ellipsis */}
+                                    {/* Title */}
                                     <td
                                         className="px-4 py-3 font-medium text-gray-900 truncate max-w-[180px]"
                                         title={pkg.title}
@@ -120,7 +127,7 @@ export default function ShowPackage() {
                                         {pkg.title}
                                     </td>
 
-                                    {/* Location with icon + ellipsis */}
+                                    {/* Location */}
                                     <td
                                         className="px-4 py-3 text-gray-700 truncate max-w-[200px]"
                                         title={pkg.location}
@@ -171,6 +178,30 @@ export default function ShowPackage() {
                 <p className="text-red-500 font-semibold text-center mt-6">
                     No packages found.
                 </p>
+            )}
+
+            {packages.length > itemsPerPage && (
+                <div className="flex justify-center items-center gap-3 mt-4">
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage((p) => p - 1)}
+                        className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                    >
+                        Prev
+                    </button>
+
+                    <span className="font-semibold">
+                        {currentPage} of {totalPages}
+                    </span>
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage((p) => p + 1)}
+                        className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                    >
+                        Next
+                    </button>
+                </div>
             )}
 
             {/* Edit Modal */}

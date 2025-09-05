@@ -11,6 +11,7 @@ import ScrollToTop from "./Components/ScrollToTop"
 import Package from "./Pages/Package"
 import PackageDetail from "./Pages/PackageDetail"
 import AdminDashboard from "./Admin/AdminDashboard"
+import UserBookings from "./Pages/UserBooking"
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/aboutus" element={<AboutUs />} />
                 <Route path="/tourpackages" element={<Package />} />
                 <Route path="/package/:tour_name" element={<PackageDetail />} />
+                <Route path="/bookings" element={<UserBookings />} />
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />

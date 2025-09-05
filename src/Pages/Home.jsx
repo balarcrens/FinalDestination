@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import ContactUs from "./ContactUs";
+import heroVideo from "/assets/hero-video.mp4";
 
 export default function Home() {
     return (
@@ -19,38 +19,22 @@ export default function Home() {
 }
 
 const HeroSection = () => {
-    const images = [
-        "/assets/australia-banner-home.webp",
-        "/assets/dubai_newbb.png",
-        "/assets/europe-banner-home.webp",
-        "/assets/rajasthan-banner-home.png",
-        "/assets/kerala_newbb.png"
-    ];
-
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) =>
-                prevIndex === images.length - 1 ? 0 : prevIndex + 1
-            );
-        }, 3000);
-        return () => clearInterval(interval);
-    }, [images.length]);
-
     return (
         <section className="relative flex flex-col items-center justify-center text-center px-3 text-white h-[80vh] sm:h-[70vh] md:h-[80vh] overflow-hidden">
-            <img
-                src={images[currentIndex]}
-                alt="Hero Background"
-                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
-            />
+            {/* Video Background */}
+            <div className="absolute inset-0 w-full h-full overflow-hidden">
+                <video
+                    src={heroVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-contain"
+                />
+            </div>
 
             {/* Content */}
             <div className="relative z-10 max-w-3xl">
-                <h1 className="text-2xl md:text-4xl font-bold mb-2">
-                    Dream Destination with Final Destination
-                </h1>
                 <h2 className="text-lg md:text-2xl font-semibold mb-6">
                     Where Every Experience Counts!
                 </h2>
@@ -70,10 +54,10 @@ const HeroSection = () => {
                 {/* Categories */}
                 <div className="flex flex-wrap justify-center rounded-full mt-6 gap-2">
                     {[
-                        { name: "Honeymoon", img: images[0] },
-                        { name: "Pilgrimage", img: images[1] },
-                        { name: "Luxury", img: images[2] },
-                        { name: "Adventure", img: images[4] },
+                        { name: "Honeymoon", img: "/assets/australia-banner-home.webp" },
+                        { name: "Pilgrimage", img: "/assets/dubai_newbb.png" },
+                        { name: "Luxury", img: "/assets/europe-banner-home.webp" },
+                        { name: "Adventure", img: "/assets/kerala_newbb.png" },
                     ].map((cat, idx) => (
                         <div
                             key={idx}
@@ -90,8 +74,9 @@ const HeroSection = () => {
                 </div>
             </div>
         </section>
-    )
-}
+    );
+};
+
 
 const Destinations = () => {
     const destinations = [

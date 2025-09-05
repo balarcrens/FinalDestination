@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Mail, Phone, User, Calendar } from "lucide-react";
+import { Mail, User, Calendar } from "lucide-react";
 
 export default function ContactAdmin() {
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 20;
 
     useEffect(() => {
         axios
@@ -19,13 +22,17 @@ export default function ContactAdmin() {
             .finally(() => setLoading(false));
     }, []);
 
+    const totalPages = Math.ceil(contacts.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentData = contacts.slice(startIndex, startIndex + itemsPerPage);
+
     return (
         <>
             {loading ? (
                 <p className="text-gray-500">Loading contacts...</p>
-            ) : contacts.length > 0 ? (
+            ) : currentData.length > 0 ? (
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {contacts.map((c) => (
+                    {currentData.map((c) => (
                         <div
                             key={c.id}
                             className="p-5 bg-white rounded-2xl hover:shadow-xl transition border border-gray-200"
@@ -53,6 +60,30 @@ export default function ContactAdmin() {
                 </div>
             ) : (
                 <p className="text-red-500 font-semibold mt-6">No contacts found.</p>
+            )}
+
+            {contacts.length > itemsPerPage && (
+                <div className="flex justify-center items-center gap-3 mt-4">
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage((p) => p - 1)}
+                        className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                    >
+                        Prev
+                    </button>
+
+                    <span className="font-semibold">
+                        {currentPage} of {totalPages}
+                    </span>
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage((p) => p + 1)}
+                        className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                    >
+                        Next
+                    </button>
+                </div>
             )}
         </>
     );

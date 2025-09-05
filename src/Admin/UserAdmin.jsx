@@ -6,6 +6,9 @@ export default function UserAdmin() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 20;
+
     useEffect(() => {
         axios.get("http://localhost/FinalDestination/Backend/getAllUser.php")
             .then((res) => {
@@ -18,11 +21,15 @@ export default function UserAdmin() {
             .finally(() => setLoading(false));
     }, []);
 
+    const totalPages = Math.ceil(users.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentData = users.slice(startIndex, startIndex + itemsPerPage);
+
     return (
         <>
             {loading ? (
                 <p className="text-gray-500">Loading users...</p>
-            ) : users.length > 0 ? (
+            ) : currentData.length > 0 ? (
                 <div className="overflow-x-auto border border-gray-200">
                     <table className="min-w-full text-sm text-left border-collapse bg-white rounded-xl">
                         <thead>
@@ -36,7 +43,7 @@ export default function UserAdmin() {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((user, idx) => (
+                            {currentData.map((user, idx) => (
                                 <tr
                                     key={user.id}
                                     className={`${idx % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-indigo-50 transition`}
@@ -73,7 +80,31 @@ export default function UserAdmin() {
                     </table>
                 </div>
             ) : (
-                <p className="text-red-500 font-semibold text-center mt-6">🚫 No users found.</p>
+                <p className="text-red-500 font-semibold text-center mt-6">No users found.</p>
+            )}
+
+            {users.length > itemsPerPage && (
+                <div className="flex justify-center items-center gap-3 mt-4">
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage((p) => p - 1)}
+                        className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                    >
+                        Prev
+                    </button>
+
+                    <span className="font-semibold">
+                        {currentPage} of {totalPages}
+                    </span>
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage((p) => p + 1)}
+                        className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                    >
+                        Next
+                    </button>
+                </div>
             )}
         </>
     );
