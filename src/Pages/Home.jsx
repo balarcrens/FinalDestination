@@ -45,7 +45,7 @@ const HeroSection = () => {
     };
 
     return (
-        <section className="relative flex flex-col items-center justify-center text-center px-3 text-white h-[80vh] sm:h-[70vh] md:h-[80vh] overflow-visible">
+        <section className="relative flex flex-col items-center justify-center text-center px-3 text-white h-[80vh] sm:h-[70vh] md:h-[80vh] overflow-hidden">
             {/* Video Background */}
             <div className="absolute inset-0 w-full h-full overflow-hidden">
                 <video
@@ -68,18 +68,18 @@ const HeroSection = () => {
                 </h2>
 
                 {/* Search Box */}
-                <div className="relative max-w-lg mx-auto">
-                    <div className="flex items-center bg-white rounded-full p-1 shadow-2xl">
+                <div className="relative w-full max-w-lg mx-auto px-4">
+                    <div className="flex flex-col sm:flex-row w-full items-stretch sm:items-center bg-white rounded-3xl sm:rounded-full p-1 shadow-2xl gap-2 sm:gap-0">
                         <input
                             type="text"
-                            placeholder="Enter Your Dream Destination!"
+                            placeholder="Enter Your Destination!"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            className="flex-grow px-4 py-3 text-gray-700 rounded-l-full focus:outline-none text-base"
+                            className="flex-grow min-w-0 px-3 py-2 text-gray-700 rounded-xl sm:rounded-l-full focus:outline-none text-base"
                         />
                         <button
                             onClick={handleSearch}
-                            className="bg-orange-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-600 transition-all shadow"
+                            className="bg-orange-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full sm:rounded-full font-semibold hover:bg-orange-600 transition-all shadow whitespace-nowrap"
                         >
                             Search
                         </button>
@@ -107,7 +107,7 @@ const HeroSection = () => {
                                                 <div className="w-full">
                                                     <p className="font-semibold">{tour.title}</p>
                                                     <p className="text-sm text-gray-600">
-                                                        {tour.location} — ${tour.price}
+                                                        {tour.location} — ₹{tour.price}
                                                     </p>
                                                 </div>
                                             </div>
