@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function Header() {
-    const lightLogo = "/assets/header_logo.png";
+    const Logo = "/assets/header_logo.png";
     const [isFixed, setIsFixed] = useState(false);
     const [headerHeight, setHeaderHeight] = useState(0);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -51,7 +51,7 @@ export default function Header() {
                 {/* Logo */}
                 <div className="flex items-center">
                     <Link to="/">
-                        <img src={lightLogo} alt="Final Destination" className="h-14 w-auto object-contain rounded-lg p-1" />
+                        <img src={Logo} alt="Final Destination" className="h-14 w-auto object-contain rounded-lg p-1" />
                     </Link>
                 </div>
 

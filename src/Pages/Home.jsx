@@ -59,7 +59,7 @@ const HeroSection = () => {
             </div>
 
             {/* Content */}
-            <div className="relative z-20 max-w-3xl px-4">
+            <div className="relative z-20 max-w-3xl sm:px-4">
                 <h1 className="text-2xl md:text-4xl font-bold mb-2">
                     Dream Destination with Final Destination
                 </h1>
