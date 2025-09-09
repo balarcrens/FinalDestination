@@ -106,7 +106,6 @@ export default function ShowPackage() {
                                 <th className="px-4 py-3 font-semibold">Title</th>
                                 <th className="px-4 py-3 font-semibold">Location</th>
                                 <th className="px-4 py-3 font-semibold">Price</th>
-                                <th className="px-4 py-3 font-semibold">Dates</th>
                                 <th className="px-4 py-3 font-semibold text-center">Actions</th>
                             </tr>
                         </thead>
@@ -143,14 +142,6 @@ export default function ShowPackage() {
                                         <div className="flex items-center gap-2">
                                             <IndianRupee size={16} className="text-green-600" />
                                             {pkg.price}
-                                        </div>
-                                    </td>
-
-                                    {/* Dates */}
-                                    <td className="px-4 py-3 text-gray-700 whitespace-nowrap">
-                                        <div className="flex items-center gap-2">
-                                            <Calendar size={16} className="text-gray-500" />
-                                            {pkg.start_date} → {pkg.end_date}
                                         </div>
                                     </td>
 
